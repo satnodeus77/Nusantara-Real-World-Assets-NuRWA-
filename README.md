@@ -17,8 +17,8 @@
 * 📱 **Android APK:** [https://github.com/satnodeus77/Nusantara-Real-World-Assets-NuRWA/tree/main/APK]
 * ⚙️ **Backend API (Swagger UI):** [https://nurwa-api.vercel.app/docs]
 * 📜 **Devnet Program ID:**[`QcoV1YM24NYoWvBeqDgh1AKq3oQXM3ncAnvcVFdW96E`](https://explorer.solana.com/address/QcoV1YM24NYoWvBeqDgh1AKq3oQXM3ncAnvcVFdW96E?cluster=devnet)
-* 🎥 **Pitch Video & Demo: [https://drive.google.com/drive/folders/1MW92D-ElK6-O14zahVwUw_wJhxiDzCOz?usp=sharing]
-* 📊 **Pitch Deck: [https://drive.google.com/drive/folders/1MW92D-ElK6-O14zahVwUw_wJhxiDzCOz?usp=sharing]
+* 🎥 **Pitch Video & Demo: [https://www.youtube.com/watch?v=3oiZYGu3YGM&t=4s]
+* 📊 **Pitch Deck: [https://docs.google.com/presentation/d/1VLGegL1Q01WTAeYgtfbr5HAjeSDqL42isB9z4ZKx7ic/edit?usp=sharing]
 
 ---
 
