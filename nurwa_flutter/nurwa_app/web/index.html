@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!--
+    If you are serving your web app in a path other than the root, change the
+    href value below to reflect the base path you are serving from.
+
+    The path provided below has to start and end with a slash "/" in order for
+    it to work correctly.
+
+    For more details:
+    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
+
+    This is a placeholder for base href that will be replaced by the value of
+    the `--base-href` argument provided to `flutter build`.
+  -->
+  <base href="$FLUTTER_BASE_HREF">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="nurwa_app">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>nurwa_app</title>
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <!--
+    You can customize the "flutter_bootstrap.js" script.
+    This is useful to provide a custom configuration to the Flutter loader
+    or to give the user feedback during the initialization process.
+
+    For more details:
+    * https://docs.flutter.dev/platform-integration/web/initialization
+  -->
+  <script src="flutter_bootstrap.js" async></script>
+
+  <!-- 1. Load Official Solana Web3.js -->
+  <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+
+  <!-- 2. The NuRWA Real Transaction Bridge -->
+  <script>
+      // Fungsi mendapatkan Phantom Provider
+      function getProvider() {
+        if ('phantom' in window) {
+          const provider = window.phantom?.solana;
+          if (provider?.isPhantom) {
+            return provider;
+          }
+        }
+        return null;
+      }
+
+      // Fungsi eksekusi transaksi yang dipanggil oleh Dart
+      async function executeSolanaTransfer(destinationAddress, amountUSDC) {
+        console.log("\n[NURWA WEB DEBUG] =================================");
+        console.log("[NURWA WEB DEBUG] ⏳ Memulai transaksi Web...");
+        console.log("[NURWA WEB DEBUG] 🔹 Destination:", destinationAddress);
+        console.log("[NURWA WEB DEBUG] 🔹 Amount USDC:", amountUSDC);
+
+        try {
+          const provider = getProvider();
+          if (!provider) {
+            console.error("[NURWA WEB DEBUG] ❌ Phantom Wallet tidak ditemukan di browser!");
+            return "CANCELLED";
+          }
+
+          // Pastikan koneksi ke Phantom sudah tersambung
+          await provider.connect();
+
+          // Gunakan Fallback RPC jika Devnet utama sedang limit
+          const connection = new solanaWeb3.Connection("https://api.devnet.solana.com", "confirmed");
+          
+          const fromPubkey = provider.publicKey;
+          const toPubkey = new solanaWeb3.PublicKey(destinationAddress);
+
+          // 🔥 SAFETY CHECK: Paksa konversi ke Float agar Math.floor tidak menghasilkan NaN
+          let numericAmount = parseFloat(amountUSDC);
+          if (isNaN(numericAmount)) {
+              numericAmount = 0.0;
+          }
+
+          let lamports = Math.floor(numericAmount * 1000000); 
+
+          // 🔥 RENT EXEMPTION HACK
+          if (lamports < 890880) {
+            lamports += 890880;
+          }
+
+          console.log("[NURWA WEB DEBUG] 🔹 Nominal Lamports:", lamports);
+
+          const transaction = new solanaWeb3.Transaction().add(
+            solanaWeb3.SystemProgram.transfer({
+              fromPubkey: fromPubkey,
+              toPubkey: toPubkey,
+              lamports: lamports,
+            })
+          );
+
+          console.log("[NURWA WEB DEBUG] 🔹 Mengambil Blockhash...");
+          const { blockhash } = await connection.getLatestBlockhash('confirmed');
+          transaction.recentBlockhash = blockhash;
+          transaction.feePayer = fromPubkey;
+
+          console.log("[NURWA WEB DEBUG] 🚀 Membuka Phantom untuk Tanda Tangan...");
+          // Meminta Phantom Web untuk Sign & Send
+          const { signature } = await provider.signAndSendTransaction(transaction);
+          
+          console.log("[NURWA WEB DEBUG] 🎉 Transaksi Berhasil! Signature:", signature);
+          console.log("[NURWA WEB DEBUG] =================================\n");
+          
+          return signature;
+
+        } catch (err) {
+          console.error("[NURWA WEB DEBUG] 🚨 ERROR:", err);
+          return "CANCELLED";
+        }
+      }
+    </script>
+</body>
+</html>

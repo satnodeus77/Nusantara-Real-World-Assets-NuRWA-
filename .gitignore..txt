@@ -1,0 +1,28 @@
+# --- NuRWA GitIgnore ---
+# Note: APK and IPA folders are NOT ignored and WILL be pushed.
+
+# --- The ACTUAL heavy junk (Ignore these to save 500MB+) ---
+**/build/
+**/.dart_tool/
+**/.packages
+**/.pub-cache/
+**/.pub/
+
+# Backend & Smart Contract Junk
+**/node_modules/
+**/venv/
+**/target/
+**/.anchor/
+**/test-ledger/
+
+# IDEs & OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Security (Don't push these!)
+**/.env
+**/.env.*
+**/wallet.json
+**/id.json
