@@ -14,7 +14,7 @@
 
 ## 🚀 Live Demos & Important Links
 * 🌐 **Live Web Application (Vercel):** [https://nurwa-app.vercel.app](https://nurwa-app.vercel.app)
-* 📱 **Android APK:** [Download from GitHub Releases](#) *(Insert your release link here)*
+* 📱 **Android APK:** [https://github.com/satnodeus77/Nusantara-Real-World-Assets-NuRWA/tree/main/APK]
 * ⚙️ **Backend API (Swagger UI):** [https://nurwa-api.vercel.app/docs]
 * 📜 **Devnet Program ID:**[`QcoV1YM24NYoWvBeqDgh1AKq3oQXM3ncAnvcVFdW96E`](https://explorer.solana.com/address/QcoV1YM24NYoWvBeqDgh1AKq3oQXM3ncAnvcVFdW96E?cluster=devnet)
 * 🎥 **Pitch Video & Demo: [https://drive.google.com/drive/folders/1MW92D-ElK6-O14zahVwUw_wJhxiDzCOz?usp=sharing]
